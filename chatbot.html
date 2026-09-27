@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College FAQ Chatbot</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .chatbot {
+            width: 430px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1e3a8a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h2 {
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+        }
+
+        .chat-box {
+            height: 450px;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 11px 14px;
+            margin: 10px 0;
+            border-radius: 12px;
+            line-height: 1.5;
+        }
+
+        .bot {
+            background: #e5e7eb;
+            color: #111827;
+            margin-right: auto;
+        }
+
+        .user {
+            background: #1e3a8a;
+            color: white;
+            margin-left: auto;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 12px;
+            border-top: 1px solid #ddd;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .input-area button {
+            margin-left: 8px;
+            padding: 12px 18px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .input-area button:hover {
+            background: #172554;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="chatbot">
+
+    <div class="header">
+        <h2>🎓 College FAQ Chatbot</h2>
+        <p>Time Table & Academic Calendar</p>
+    </div>
+
+    <div class="chat-box" id="chatBox">
+
+        <div class="message bot">
+            Hello! 👋 I am your College FAQ Chatbot.<br>
+            Ask me about timetable, examinations, academic calendar,
+            class timings and holidays.
+        </div>
+
+    </div>
+
+    <div class="input-area">
+
+        <input
+            type="text"
+            id="userInput"
+            placeholder="Ask your question..."
+            onkeypress="handleKey(event)"
+        >
+
+        <button onclick="sendMessage()">Send</button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function sendMessage() {
+
+    let input = document.getElementById("userInput");
+
+    let question = input.value.trim();
+
+    if (question === "") {
+        return;
+    }
+
+    addMessage(question, "user");
+
+    let answer = getBotResponse(question);
+
+    setTimeout(function() {
+        addMessage(answer, "bot");
+    }, 400);
+
+    input.value = "";
+}
+
+
+function addMessage(message, sender) {
+
+    let chatBox = document.getElementById("chatBox");
+
+    let messageDiv = document.createElement("div");
+
+    messageDiv.classList.add("message");
+    messageDiv.classList.add(sender);
+
+    messageDiv.innerHTML = message;
+
+    chatBox.appendChild(messageDiv);
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+
+function getBotResponse(question) {
+
+    question = question.toLowerCase();
+
+
+    // 1. Time Table
+    if (
+        question.includes("timetable") ||
+        question.includes("time table")
+    ) {
+        return "The current semester timetable is published on the student portal and department notice board.";
+    }
+
+
+    // 2. Monday Timetable
+    else if (
+        question.includes("monday timetable") ||
+        question.includes("monday time table")
+    ) {
+        return "On Monday, the first period starts at 9:00 AM, followed by regular theory and practical classes according to the department timetable.";
+    }
+
+
+    // 3. Class Timing
+    else if (
+        question.includes("class timing") ||
+        question.includes("class timings")
+    ) {
+        return "Regular college classes are conducted from 9:00 AM to 4:00 PM on working days.";
+    }
+
+
+    // 4. First Period
+    else if (
+        question.includes("first period") ||
+        question.includes("first class")
+    ) {
+        return "The first period begins at 9:00 AM and ends at 9:50 AM.";
+    }
+
+
+    // 5. Lunch Break
+    else if (
+        question.includes("lunch") ||
+        question.includes("lunch break")
+    ) {
+        return "The lunch break is from 12:50 PM to 1:40 PM on regular working days.";
+    }
+
+
+    // 6. Semester Examination
+    else if (
+        question.includes("semester exam") ||
+        question.includes("semester examination")
+    ) {
+        return "The semester examinations are conducted at the end of each semester, and the examination dates are listed in the Academic Calendar.";
+    }
+
+
+    // 7. Internal Examination
+    else if (
+        question.includes("internal exam") ||
+        question.includes("internal examination")
+    ) {
+        return "Internal examinations are conducted during the semester as scheduled by the college. The exact dates are announced by the respective department.";
+    }
+
+
+    // 8. Academic Calendar
+    else if (
+        question.includes("academic calendar")
+    ) {
+        return "The Academic Calendar contains important dates such as semester commencement, internal examinations, semester examinations, holidays and semester completion.";
+    }
+
+
+    // 9. Semester Start
+    else if (
+        question.includes("semester start") ||
+        question.includes("semester begins") ||
+        question.includes("semester starting")
+    ) {
+        return "The semester begins according to the date specified in the official Academic Calendar issued by the college.";
+    }
+
+
+    // 10. Semester End
+    else if (
+        question.includes("semester end") ||
+        question.includes("semester ends")
+    ) {
+        return "The semester ends after the completion of regular classes and semester examinations as specified in the Academic Calendar.";
+    }
+
+
+    // 11. Holidays
+    else if (
+        question.includes("holiday") ||
+        question.includes("holidays")
+    ) {
+        return "The college holidays include national, public and institutional holidays. The complete holiday list is provided in the Academic Calendar.";
+    }
+
+
+    // 12. Working Days
+    else if (
+        question.includes("working days") ||
+        question.includes("working day")
+    ) {
+        return "The college functions on regular working days from Monday to Friday, except for holidays and other officially declared non-working days.";
+    }
+
+
+    // 13. Practical Exam
+    else if (
+        question.includes("practical exam") ||
+        question.includes("practical examination")
+    ) {
+        return "Practical examinations are conducted according to the examination schedule released by the respective department.";
+    }
+
+
+    // 14. Result
+    else if (
+        question.includes("result") ||
+        question.includes("results")
+    ) {
+        return "Semester examination results are published through the official student portal after the completion of the evaluation process.";
+    }
+
+
+    // 15. Greeting
+    else if (
+        question.includes("hello") ||
+        question.includes("hi") ||
+        question.includes("hey")
+    ) {
+        return "Hello! 👋 How can I help you with the college timetable or academic calendar?";
+    }
+
+
+    // 16. Thank You
+    else if (
+        question.includes("thank you") ||
+        question.includes("thanks")
+    ) {
+        return "You're welcome! 😊 Feel free to ask me another question.";
+    }
+
+
+    // Unknown Question
+    else {
+        return "Sorry, I don't have an answer for that question. Please ask me about the timetable, class timings, examinations, academic calendar or holidays.";
+    }
+}
+
+
+function handleKey(event) {
+
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+
+}
+
+</script>
+
+</body>
+</html>
